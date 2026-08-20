@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تدريبي | منصة التدريب الميداني</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<div id="toast"></div>
+<section id="landing" class="screen">
+  <div class="landing-card">
+    <div class="brand-logo">ت</div><div class="brand-name">تدريبي</div><p class="brand-sub">منصة التدريب الميداني</p>
+    <div class="role-grid">
+      <button class="role-btn" onclick="openStudentAuth()"><span class="role-icon">🎓</span><strong>طالب</strong><small>دخول وإنشاء الحساب</small></button>
+      <button class="role-btn admin" onclick="openAdminAuth()"><span class="role-icon">🛡️</span><strong>مسئول</strong><small>لوحة الإدارة وفحص QR</small></button>
+    </div>
+    <div class="demo-note">النسخة الجديدة تعمل بواجهة منفصلة وBackend + MongoDB</div>
+  </div>
+</section>
+
+<section id="studentAuth" class="screen hidden"><div class="auth-card">
+  <button class="back-btn" onclick="goLanding()">← العودة</button><div class="brand-logo small">ت</div><h1>تدريبي</h1><p class="muted center">بوابة الطالب</p>
+  <div class="auth-tabs"><button id="studentLoginTab" class="auth-tab active" onclick="studentAuthTab('login')">تسجيل الدخول</button><button id="studentRegisterTab" class="auth-tab" onclick="studentAuthTab('register')">إنشاء حساب</button></div>
+  <form id="studentLoginForm" class="auth-form"><label>الرقم القومي<input id="loginNational" inputmode="numeric" required></label><label>كلمة المرور<input id="loginPassword" type="password" required></label><button class="primary wide">دخول</button><button type="button" class="text-btn" onclick="resetStudent()">نسيت كلمة السر؟</button><button type="button" class="demo-login" onclick="demoStudentLogin()">دخول الطالب التجريبي</button></form>
+  <form id="studentRegisterForm" class="auth-form hidden"><h2>إنشاء حساب الطالب</h2><p class="form-subtitle">يجب أن يكون الاسم ورقم الجلوس موجودين في بيانات الطلاب المستوردة.</p><label>الاسم رباعي<input id="regName" required></label><label>الرقم القومي<input id="regNational" maxlength="14" inputmode="numeric" required></label><label>رقم الهاتف<input id="regPhone" inputmode="tel"></label><label>رقم الجلوس<input id="regSeat" required></label><label>رقم المجموعة<select id="regGroup" required></select></label><div id="groupPreview" class="group-preview hidden"></div><label>كلمة المرور<input id="regPassword" type="password" minlength="6" required></label><label>تأكيد كلمة المرور<input id="regPassword2" type="password" minlength="6" required></label><button class="primary wide">إنشاء الحساب</button></form>
+</div></section>
+
+<section id="adminAuth" class="screen hidden"><div class="auth-card admin-auth"><button class="back-btn" onclick="goLanding()">← العودة</button><div class="brand-logo small">ت</div><h1>تدريبي</h1><p class="muted center">دخول الإدارة</p><form id="adminLoginForm" class="auth-form"><label>البريد الإداري<input id="adminUser" type="email" autocomplete="username" required></label><label>كلمة المرور<input id="adminPass" type="password" autocomplete="current-password" required></label><button class="primary wide">دخول الإدارة</button></form><div class="credential-hint">حسابات التجربة موثقة في README فقط.</div></div></section>
+
+<section id="app" class="app hidden"><aside class="sidebar"><div class="side-logo"><div class="brand-logo tiny">ت</div><div><b>تدريبي</b><small>التدريب الميداني</small></div></div><div id="studentNav" class="nav-list"><button onclick="studentPage('dashboard')" class="nav active">🏠 الرئيسية</button></div><div id="adminNav" class="nav-list hidden"><button onclick="adminPage('dashboard')" class="nav active">🏠 الرئيسية</button><button onclick="adminPage('students')" class="nav">👨‍🎓 الطلاب</button><button onclick="adminPage('scanner')" class="nav">📷 فحص QR</button><button onclick="adminPage('attendance')" class="nav">✅ الحضور</button><button onclick="adminPage('evaluation')" class="nav">⭐ التقييم</button><button onclick="adminPage('study')" class="nav">📅 الدراسة</button><button onclick="adminPage('data')" class="nav">📥 البيانات</button><button onclick="adminPage('review')" class="nav">✅ مراجعة واعتماد</button><button onclick="adminPage('export')" class="nav">📤 تصدير</button><button onclick="adminPage('settings')" class="nav">⚙️ الإعدادات</button><button id="permissionsNav" onclick="adminPage('permissions')" class="nav hidden">👥 الصلاحيات</button></div><button class="nav logout" onclick="logout()">↪ تسجيل الخروج</button></aside>
+<main class="main"><header class="topbar"><div class="top-title"><div class="eyebrow">منصة تدريبي</div><h2 id="pageTitle">الرئيسية</h2></div><div class="top-actions"><label id="facultyWrap" class="faculty-switch hidden">الفرقة<select id="adminFaculty" onchange="reloadAdminPage()"><option value="3">الثالثة</option><option value="4">الرابعة</option></select></label><span id="currentUser" class="user-chip"></span></div></header><div id="content"></div></main></section>
+<script src="js/api.js"></script><script src="js/app.js"></script>
+</body></html>

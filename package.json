@@ -1,0 +1,9 @@
+{
+  "name": "tadreebi-mongodb-render",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node scripts/check-backend.js && node --check frontend/js/app.js && node --check frontend/js/api.js",
+    "check:backend": "node scripts/check-backend.js"
+  }
+}
