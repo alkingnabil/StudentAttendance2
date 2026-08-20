@@ -1,4 +1,4 @@
-const API_BASE = window.localStorage.getItem('tadreebi_api_url') || 'http://localhost:10000/api';
+const API_BASE = 'https://studentattendance2-2u4a.onrender.com/api';
 
 async function api(path, options = {}) {
   const headers = new Headers(options.headers || {});
